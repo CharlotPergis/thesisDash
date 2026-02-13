@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Full Log History</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+        h1 { color: #333; }
+        a { text-decoration: none; color: #007BFF; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #444; color: #fff; }
+        tr:nth-child(even) { background-color: #eee; }
+        .Normal { background-color: #b2fab4; }
+        .Overload { background-color: #fab2b2; }
+        .PotentialOverload { background-color: #fcebbd; }
+        .HighRisk { background-color: #f5a142; }
+        .Overheating { background-color: #ffcc66; }
+    </style>
+</head>
+<body>
+    <h1>Full Log History</h1>
+    <a href="/">← Back to Dashboard</a>
+    <table>
+        <tr>
+            <th>Timestamp</th>
+            <th>Itotal (A)</th>
+            <th>Tbreaker (°C)</th>
+            <th>ThermalSlope</th>
+            <th>TimeAboveRated (s)</th>
+            <th>TimeTempRising (s)</th>
+            <th>Predicted State</th>
+        </tr>
+        {% for row in entries %}
+        <tr class="{{ row['PredictedState'].replace(' ', '').replace('(', '').replace(')', '') }}">
+            <td>{{ row['Timestamp'] }}</td>
+            <td>{{ row['Itotal'] }}</td>
+            <td>{{ row['Tbreaker'] }}</td>
+            <td>{{ row['ThermalSlope'] }}</td>
+            <td>{{ row['TimeAboveRated'] }}</td>
+            <td>{{ row['TimeTempRising'] }}</td>
+            <td>{{ row['PredictedState'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

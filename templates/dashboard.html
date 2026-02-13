@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Electrical Monitoring Dashboard</title>
+    <script>
+        // Reload the page every 5 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #666; color: #fff; }
+        tr:nth-child(even) { background-color: #eee; }
+        .Normal { background-color: #b2fab4; }       /* green */
+        .Overload { background-color: #fab2b2; }     /* red */
+        .PotentialOverload { background-color: #fcebbd; }    /* yellow */
+        .HighRisk { background-color: #f5a142; }         /* orange */
+        .Overheating { background-color: #ffcc66; }  /* amber */
+    </style>
+</head>
+<body>
+    <h1>Electrical Monitoring Dashboard</h1>
+    <a href="/history" style="text-decoration:none;">
+    <button style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; cursor: pointer;">
+        View Full History
+    </button>
+    </a>
+    <table>
+        <tr>
+            <th>Timestamp</th>
+            <th>Itotal (A)</th>
+            <th>Tbreaker (°C)</th>
+            <th>ThermalSlope</th>
+            <th>TimeAboveRated (s)</th>
+            <th>TimeTempRising (s)</th>
+            <th>Predicted State</th>
+        </tr>
+        {% for row in entries %}
+        <tr class="{{ row['PredictedState'].replace(' ', '').replace('(', '').replace(')', '') }}">
+            <td>{{ row['Timestamp'] }}</td>
+            <td>{{ row['Itotal'] }}</td>
+            <td>{{ row['Tbreaker'] }}</td>
+            <td>{{ row['ThermalSlope'] }}</td>
+            <td>{{ row['TimeAboveRated'] }}</td>
+            <td>{{ row['TimeTempRising'] }}</td>
+            <td>{{ row['PredictedState'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
